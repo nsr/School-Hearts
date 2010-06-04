@@ -6,7 +6,9 @@ package hearts.state.actions.gui;
 
 import hearts.defs.actions.gui.AGUIAction;
 import hearts.defs.state.GUIStateException;
+import hearts.defs.state.IGUIGameTable;
 import hearts.defs.state.IGUIState;
+import hearts.defs.state.IGameState;
 
 /**
  * Akcja rozsyłana do wszystkich graczy, zawiera informacje o tym, kto będzie
@@ -57,6 +59,8 @@ public class AuctionFinalGUIAction extends AGUIAction {
 
     @Override
     public void perform(IGUIState gui) throws GUIStateException {
-        //throw new UnsupportedOperationException("Not supported yet.");
+        IGUIGameTable table = gui.getGameTable();
+        table.showAuction(false);
+        table.setActiveUser(activeUser);
     }
 }

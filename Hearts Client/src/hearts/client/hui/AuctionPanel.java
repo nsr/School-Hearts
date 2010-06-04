@@ -173,7 +173,10 @@ public class AuctionPanel extends javax.swing.JPanel implements IAuctionPanel {
      */
     public void setUserBid(int id, int bid) {
         int place = ((GUITrick) gui.getGameTable().getTrick()).getPlace(id);
-        bids[place].setText(String.valueOf(bid));
+        JLabel tmpbid = bids[place];
+        if (tmpbid != null) {
+            tmpbid.setText(String.valueOf(bid));
+        }
     }
 
     public void setActive(boolean active) {

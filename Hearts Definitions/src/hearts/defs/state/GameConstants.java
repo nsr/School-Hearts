@@ -39,4 +39,6 @@ public class GameConstants {
 
     public static final boolean GET_LOGGER=true;
 
+    public static final boolean SIMONS_NASTY_STUFF = true;
+
 }

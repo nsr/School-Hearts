@@ -489,7 +489,7 @@ public class GameTable extends javax.swing.JPanel implements IGUIGameTable {
             GridBagConstraints constraints = ((GridBagLayout) this.getLayout()).getConstraints(trick);
             this.remove(trick);
             this.add(auctionPanel, constraints);
-        } else if (auctionVisible) {
+        } else if (!show && auctionVisible) {
             GridBagConstraints constraints = ((GridBagLayout) this.getLayout()).getConstraints(auctionPanel);
             this.remove(auctionPanel);
             this.add(trick, constraints);

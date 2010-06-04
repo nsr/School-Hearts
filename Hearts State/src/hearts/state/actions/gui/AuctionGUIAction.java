@@ -63,7 +63,10 @@ public class AuctionGUIAction extends AGUIAction {
     public void perform(IGUIState gui) throws GUIStateException {
         IGUIGameTable table = gui.getGameTable();
         IAuctionPanel auction = table.getAuctionPanel();
+
         auction.setUserBid(lider, quotion);
+        auction.setActive(activeUser == table.getLocalUserId());
+        
         table.setActiveUser(activeUser);
     }
 }

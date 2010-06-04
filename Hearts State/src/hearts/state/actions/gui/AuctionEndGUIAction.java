@@ -2,23 +2,25 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package hearts.state.actions.gui;
 
 import hearts.defs.actions.gui.AGUIAction;
 import hearts.defs.state.GUIStateException;
+import hearts.defs.state.GameConstants;
 import hearts.defs.state.IGUIState;
+import hearts.state.actions.AuctionDecisionAction;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 /**
  * Akcja wysyłana do wychodzącego informacje kto wygrał licytację i jego ofertę.
  * @author Paweł Trynkiewicz
  */
-public class AuctionEndGUIAction  extends AGUIAction{
+public class AuctionEndGUIAction extends AGUIAction {
 
     public AuctionEndGUIAction(int receiver) {
         super(receiver);
     }
-
     int lider;
     int commece;
     int quotion;
@@ -56,12 +58,17 @@ public class AuctionEndGUIAction  extends AGUIAction{
         this.quotion = quotion;
     }
 
-    
-    
-
     @Override
     public void perform(IGUIState gui) throws GUIStateException {
-//        throw new UnsupportedOperationException("Not supported yet.");
-    }
+        AuctionDecisionAction decision = new AuctionDecisionAction(GameConstants.SERVER);
+        
+        decision.setAccep(JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(
+                (JFrame) gui,
+                "Zaoferowano: " + quotion + ".\nPrzyjmujesz ofertę?",
+                "Koniec aukcji",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE));
 
+        gui.getSocket().actionReceived(decision);
+    }
 }
