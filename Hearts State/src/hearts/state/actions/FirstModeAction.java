@@ -10,7 +10,6 @@ import hearts.defs.state.GameStateException;
 import hearts.defs.state.ICard;
 import hearts.defs.state.IGameState;
 import hearts.state.Auction;
-import hearts.state.actions.gui.AuctionGUIAction;
 import hearts.state.actions.gui.NewDealForUserGUIAction;
 import java.util.ArrayList;
 import java.util.logging.Level;
