@@ -12,7 +12,6 @@ import hearts.defs.state.IGUIState;
 import hearts.defs.state.IGameState;
 import hearts.defs.state.IGameState.Mode;
 import hearts.defs.state.WrongCardsCountInOpponentStackException;
-import java.lang.Integer;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -32,6 +31,15 @@ public class NewDealForUserGUIAction extends AGUIAction {
     private int dealer;
     private int activeUser;
     private boolean auction;
+    private int commence;
+
+    public int getCommence() {
+        return commence;
+    }
+
+    public void setCommence(int commence) {
+        this.commence = commence;
+    }
 
     public boolean isAuction() {
         return auction;
@@ -108,6 +116,7 @@ public class NewDealForUserGUIAction extends AGUIAction {
             }
         }
         table.showAuction(auction);
+        table.getAuctionPanel().setCommence(table.getUserName(commence));
         table.setFlipped(false);
         table.setMode(mode);
         table.setActiveUser(activeUser);

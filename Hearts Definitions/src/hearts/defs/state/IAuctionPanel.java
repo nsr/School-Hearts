@@ -27,4 +27,9 @@ public interface IAuctionPanel {
      */
     void setUserBid(int id, int bid);
 
+    /**
+     * Ustawia typa do którego udarza się z ofertami
+     * @param name
+     */
+    void setCommence(String name);
 }

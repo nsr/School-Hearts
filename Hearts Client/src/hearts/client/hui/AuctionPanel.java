@@ -183,4 +183,8 @@ public class AuctionPanel extends javax.swing.JPanel implements IAuctionPanel {
         bidButton.setEnabled(active);
         bidSpinner.setEnabled(active);
     }
+
+    public void setCommence(String name) {
+        commenceName.setText(name);
+    }
 }

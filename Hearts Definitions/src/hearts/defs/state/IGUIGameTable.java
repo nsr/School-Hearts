@@ -38,10 +38,17 @@ public interface IGUIGameTable extends IGUIPanel {
 
     /**
      * Ustawia usera na stole
-     * @param place
+     * @param id
      * @param name
      */
-    public void setUser(int place, String name);
+    public void setUser(int id, String name);
+
+    /**
+     * Pobiera nazwę usera.
+     * @param id
+     * @return
+     */
+    public String getUserName(int id);
 
     /**
      * Ustaw tablicę punktów

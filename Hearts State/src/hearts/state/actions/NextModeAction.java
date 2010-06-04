@@ -102,8 +102,13 @@ public class NextModeAction extends AAction {
             tab[i].setDealer(old.getDealer());
             tab[i].setActiveUser(old.getActiveUser());
             tab[i].setAuction(old.isAuction());
-            old.addAction(tab[i]);//dadałem akcję do wysłania
+
+            if(old.isAuction() && old.getAuction() != null) {
+                tab[i].setCommence(old.getAuction().getCommence());
             }
+
+            old.addAction(tab[i]);//dadałem akcję do wysłania
+        }
         if (GameConstants.GET_LOGGER) {
             Logger.getLogger(NextModeAction.class.getName()).log(Level.INFO, "Wychodzący: " + old.getActiveUser());
         }

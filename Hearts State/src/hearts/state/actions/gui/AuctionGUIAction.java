@@ -66,7 +66,8 @@ public class AuctionGUIAction extends AGUIAction {
 
         auction.setUserBid(lider, quotion);
         auction.setActive(activeUser == table.getLocalUserId());
-        
+
+        table.getAuctionPanel().setCommence(table.getUserName(commece));
         table.setActiveUser(activeUser);
     }
 }

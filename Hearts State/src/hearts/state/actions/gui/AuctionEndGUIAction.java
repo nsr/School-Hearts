@@ -60,15 +60,17 @@ public class AuctionEndGUIAction extends AGUIAction {
 
     @Override
     public void perform(IGUIState gui) throws GUIStateException {
-        AuctionDecisionAction decision = new AuctionDecisionAction(GameConstants.SERVER);
-        
-        decision.setAccep(JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(
-                (JFrame) gui,
-                "Zaoferowano: " + quotion + ".\nPrzyjmujesz ofertę?",
-                "Koniec aukcji",
-                JOptionPane.YES_NO_OPTION,
-                JOptionPane.QUESTION_MESSAGE));
+        if (receiver == commece) {
+            AuctionDecisionAction decision = new AuctionDecisionAction(GameConstants.SERVER);
 
-        gui.getSocket().actionReceived(decision);
+            decision.setAccep(JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(
+                    (JFrame) gui,
+                    "Zaoferowano: " + quotion + ".\nPrzyjmujesz ofertę?",
+                    "Koniec aukcji",
+                    JOptionPane.YES_NO_OPTION,
+                    JOptionPane.QUESTION_MESSAGE));
+
+            gui.getSocket().actionReceived(decision);
+        }
     }
 }

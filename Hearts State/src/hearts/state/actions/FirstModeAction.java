@@ -22,6 +22,7 @@ import java.util.logging.Logger;
  * @author Paweł Trynkiewicz
  */
 public class FirstModeAction extends AAction {
+    private boolean hacks = false;
 
     private ICard[][] cards = new ICard[4][];
     //ilość zbójów i odgrywek w grze
@@ -95,7 +96,7 @@ public class FirstModeAction extends AAction {
         clone.setActiveUser(clone.removeCommence());
         //ustawiłem numer lewy
         clone.setNumTrick(0);
-        //ustawiam akcje urzytkowników
+        //ustawiam akcje użytkowników
         clone.clearTrick(false);
         for (int i = 0; i < tab.length; i++) {
             tab[i] = new NewDealForUserGUIAction(i);
@@ -116,8 +117,9 @@ public class FirstModeAction extends AAction {
             //dodanie akcji do wysłania
             clone.addAction(tab[i]);
 
-            simonsUglyStuff2(clone);
         }
+
+        simonsUglyStuff2(clone);
         if (GameConstants.GET_LOGGER) {
             Logger.getLogger(FirstModeAction.class.getName()).log(Level.INFO, "Wychodzący: " + clone.getActiveUser());
         }
@@ -129,13 +131,13 @@ public class FirstModeAction extends AAction {
     }
 
     public void simonsUglyStuff(NewDealForUserGUIAction a, IGameState clone) throws GameStateException {
-        if (GameConstants.SIMONS_NASTY_STUFF) {
+        if (hacks) {
             a.setAuction(true);
         }
     }
 
     public void simonsUglyStuff2(IGameState clone) throws GameStateException {
-        if (GameConstants.SIMONS_NASTY_STUFF) {
+        if (hacks) {
             clone.setAuction(true);
             clone.setAuction(new Auction(0));
             clone.addAction(new AuctionBeginAction(GameConstants.SERVER));

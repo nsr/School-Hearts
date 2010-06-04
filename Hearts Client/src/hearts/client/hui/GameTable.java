@@ -34,6 +34,7 @@ import java.awt.Component;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
@@ -57,7 +58,7 @@ public class GameTable extends javax.swing.JPanel implements IGUIGameTable {
     protected int[] playerTricks = {0, 0, 0, 0};
     //protected int[] playerPoints = {0, 0, 0, 0};
     protected OpponentCardsStack[] cardsStacks;
-    protected PointsTableModel points = new PointsTableModel();
+    protected PointsTableModel pointsModel = new PointsTableModel();
 
     /** Creates new form gameTable */
     public GameTable() {
@@ -77,11 +78,11 @@ public class GameTable extends javax.swing.JPanel implements IGUIGameTable {
 
 
         JLabel[] playerLabelsTMP = {userLabel, opponentLabel1,
-            opponentLabel2, opponentLabel3};
+                                    opponentLabel2, opponentLabel3};
         playerLabels = playerLabelsTMP;
 
         OpponentCardsStack[] cardsStacksTMP = {null, opponentCardsStack1,
-            opponentCardsStack2, opponentCardsStack3};
+                                               opponentCardsStack2, opponentCardsStack3};
         cardsStacks = cardsStacksTMP;
 
         //uglyTest();
@@ -250,7 +251,7 @@ public class GameTable extends javax.swing.JPanel implements IGUIGameTable {
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         add(chatInput, gridBagConstraints);
 
-        pointsTable.setModel(points);
+        pointsTable.setModel(pointsModel);
         pointsScrollPane.setViewportView(pointsTable);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -361,10 +362,14 @@ public class GameTable extends javax.swing.JPanel implements IGUIGameTable {
         auctionPanel.setGui(gui);
     }
 
-    public void setUser(int place, String name) {
-        playerNames[place] = name;
-        refreshPlayerLabel(place);
-        points.setColumnIdentifiers(playerNames);
+    public void setUser(int id, String name) {
+        playerNames[id] = name;
+        refreshPlayerLabel(id);
+        pointsModel.setColumnIdentifiers(playerNames);
+    }
+
+    public String getUserName(int id) {
+        return playerNames[id];
     }
 
     private void refreshPlayerLabel(int id) {
@@ -437,14 +442,36 @@ public class GameTable extends javax.swing.JPanel implements IGUIGameTable {
     }
 
     public void setPoints(List<Integer>[] points) {
-        int lastRowNum = points[0].size() - 1;
-        if (lastRowNum >= 0) {
-            Integer[] tmp = new Integer[4];
-            for(int i = 0; i < points.length; ++i) {
-                tmp[i] = points[i].get(lastRowNum);
+//        int lastRowNum = points[0].size() - 1;
+//        if (lastRowNum >= 0) {
+//            Integer[] tmp = new Integer[4];
+//            for(int i = 0; i < points.length; ++i) {
+//                tmp[i] = points[i].get(lastRowNum);
+//            }
+//            this.points.insertRow(lastRowNum, points);
+//        }
+        // musimy przerobić tablicę kolumn w tablicę rzędów:
+        ListIterator<Integer>[] columnIterators = new ListIterator[4];
+        int rowCount = Integer.MAX_VALUE;
+
+        for (int i = 0; i < 4; ++i) {
+            List<Integer> p = points[i];
+            int size = p.size();
+            columnIterators[i] = p.listIterator();
+            if (size < rowCount) {
+                rowCount = size;
             }
-            this.points.insertRow(lastRowNum, points);
         }
+
+        Integer[][] data = new Integer[rowCount][4];
+
+        for(int r = 0; r < rowCount; ++r) {
+            for(int c = 0; c < 4; ++c) {
+                data[r][c] = columnIterators[c].next();
+            }
+        }
+
+        pointsModel.setDataVector(data, playerNames);
     }
 
     public void setUserTricks(int id, int tricks) {
