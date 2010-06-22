@@ -76,17 +76,21 @@ public class StateGuard implements IServerStateGuard {
     /**
      * @param id
      */
-    public void notifyAboutTableChange() {
+    private void notifyAboutTableChange() {
+        server.notifyListeners(getTableUpdate());
+    }
+
+    public TableUpdate getTableUpdate() {
         TableUpdate update = new TableUpdate(name, users[0].getName());
         for (int i = 0; i < users.length; i++) {
             IUserSocket iUserSocket = users[i];
             if(iUserSocket!=null) {
-                update.setPlayer(i, iUserSocket.getName());            
+                update.setPlayer(i, iUserSocket.getName());
             } else {
                 update.setPlayer(i, null);
-            }            
+            }
         }
-        server.notifyListeners(update);
+        return update;
     }
 
     /**
