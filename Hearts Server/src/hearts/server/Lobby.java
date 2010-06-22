@@ -63,7 +63,10 @@ public class Lobby implements IMaintenaceListener{
         if ( maintenance instanceof JoinTableMaintenance ) {
             if (maintenance instanceof CreateTableMaintenance) {
                 CreateTableMaintenance m = (CreateTableMaintenance)maintenance;
-                CreateTableAnswer ans = new CreateTableAnswer(m.getTableName(), createTable(m.getTableName()));
+                boolean creationSuccess=createTable(m.getTableName());
+                Integer place = addUserToTable(m.getTableName(), m.getUserSocket());
+                boolean success = (place!=null)?true:false;                                
+                CreateTableAnswer ans = new CreateTableAnswer(m.getTableName(), creationSuccess&&success);
                 m.getUserSocket().actionReceived(ans); //wysłanie odpowiedzi do klienta tworzącego stół
             } else {
                 JoinTableMaintenance m = (JoinTableMaintenance)maintenance;

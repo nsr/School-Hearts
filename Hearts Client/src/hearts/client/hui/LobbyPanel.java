@@ -13,21 +13,20 @@ package hearts.client.hui;
 import hearts.client.hui.details.LobbyTableModel;
 import hearts.defs.state.IGUILobbyPanel;
 import hearts.defs.state.IGUIState;
-import hearts.defs.state.IGameState.Mode;
 import hearts.defs.state.LobbyTableInfo;
+import hearts.maintenance.CreateTableMaintenance;
 import hearts.maintenance.JoinTableMaintenance;
-import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import javax.swing.JFrame;
-import javax.swing.JTabbedPane;
 import javax.swing.ListSelectionModel;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 
 /**
  *
  * @author orbit
  */
-public class LobbyPanel extends javax.swing.JPanel implements IGUILobbyPanel, MouseListener {
+public class LobbyPanel extends javax.swing.JPanel implements IGUILobbyPanel, MouseListener, DocumentListener {
 
     IGUIState gui = null;
     LobbyTableModel model = new LobbyTableModel();
@@ -38,6 +37,7 @@ public class LobbyPanel extends javax.swing.JPanel implements IGUILobbyPanel, Mo
         table.setModel(model);
         table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         table.addMouseListener(this);
+        tableNameEdit.getDocument().addDocumentListener(this);
     }
 
     /** This method is called from within the constructor to
@@ -52,6 +52,9 @@ public class LobbyPanel extends javax.swing.JPanel implements IGUILobbyPanel, Mo
         jScrollPane1 = new javax.swing.JScrollPane();
         table = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
+        createTableButton = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        tableNameEdit = new javax.swing.JTextField();
 
         table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -65,15 +68,32 @@ public class LobbyPanel extends javax.swing.JPanel implements IGUILobbyPanel, Mo
 
         jLabel1.setText("Lista dostępnych stołów:");
 
+        createTableButton.setText("Utwórz stół i usiądź");
+        createTableButton.setEnabled(false);
+        createTableButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                createTableButtonActionPerformed(evt);
+            }
+        });
+
+        jLabel2.setText("Nazwa stołu: ");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 775, Short.MAX_VALUE)
-                    .addComponent(jLabel1))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 773, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jLabel1)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                            .addComponent(jLabel2)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(tableNameEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(createTableButton))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -83,13 +103,27 @@ public class LobbyPanel extends javax.swing.JPanel implements IGUILobbyPanel, Mo
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 445, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(tableNameEdit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(createTableButton))
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void createTableButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createTableButtonActionPerformed
+        CreateTableMaintenance ct = new CreateTableMaintenance(tableNameEdit.getText());
+        gui.getSocket().maintenanceReceived(ct);
+    }//GEN-LAST:event_createTableButtonActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton createTableButton;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable table;
+    private javax.swing.JTextField tableNameEdit;
     // End of variables declaration//GEN-END:variables
 
     public Panel getPanelType() {
@@ -108,7 +142,7 @@ public class LobbyPanel extends javax.swing.JPanel implements IGUILobbyPanel, Mo
         if (e.getClickCount() == 2) {
             TableDetails details = new TableDetails(this, (LobbyTableInfo) model.getInfo(table.getSelectedRow()));
             details.showInFrame();
-        }        
+        }
     }
 
     public void mousePressed(MouseEvent e) {
@@ -125,5 +159,25 @@ public class LobbyPanel extends javax.swing.JPanel implements IGUILobbyPanel, Mo
 
     void joinToTable(String tableName) {
         gui.getSocket().maintenanceReceived(new JoinTableMaintenance(tableName, 0));
+    }
+
+    public void insertUpdate(DocumentEvent e) {
+        buttonUpdate();
+    }
+
+    public void removeUpdate(DocumentEvent e) {
+        buttonUpdate();
+    }
+
+    public void changedUpdate(DocumentEvent e) {
+        buttonUpdate();
+    }
+
+    private void buttonUpdate() {
+        if (tableNameEdit.getText().equals("")) {
+            createTableButton.setEnabled(false);
+        } else {
+            createTableButton.setEnabled(true);
+        }
     }
 }
