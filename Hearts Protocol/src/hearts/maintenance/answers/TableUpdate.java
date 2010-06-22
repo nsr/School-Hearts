@@ -7,6 +7,7 @@ package hearts.maintenance.answers;
 import hearts.defs.state.GUIStateException;
 import hearts.defs.state.IGUIState;
 import hearts.defs.state.IGameState;
+import hearts.defs.state.IGameState.Mode;
 import hearts.defs.state.LobbyTableInfo;
 
 /**
@@ -24,6 +25,10 @@ public class TableUpdate extends AMaintenaceAction {
     public TableUpdate(String tableName, String owner) {
         this.tableName = tableName;
         this.owner = owner;
+    }
+
+    public void setGameMode(Mode gameMode) {
+        this.gameMode = gameMode;
     }
 
     public void setPlayer(int place, String name) {

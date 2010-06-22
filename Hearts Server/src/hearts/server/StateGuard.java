@@ -6,14 +6,12 @@ package hearts.server;
 
 import hearts.defs.actions.AAction;
 import hearts.defs.actions.AChatAction;
-import hearts.defs.actions.IActionNotifier;
 import hearts.defs.judge.IJudge;
 import hearts.defs.protocol.IUserSocket;
 import hearts.defs.state.GameConstants;
 import hearts.defs.state.GameStateException;
 import hearts.defs.state.IGameState;
 import hearts.defs.state.IServerStateGuard;
-import hearts.maintenance.answers.JoinTableAnswer;
 import hearts.maintenance.answers.TableUpdate;
 import hearts.state.DumbState;
 import hearts.state.GameState;
@@ -68,6 +66,7 @@ public class StateGuard implements IServerStateGuard {
             //gameState = judge.judge(gameState, new FirstModeAction(GameConstants.SERVER));
             //sendQueue(gameState);
             actionReceived(new FirstModeAction(GameConstants.SERVER));
+            notifyAboutTableChange();
         }
         
         return userCount - 1;
@@ -88,7 +87,7 @@ public class StateGuard implements IServerStateGuard {
         } else {
             update = new TableUpdate(name, null);
         }
-        
+        update.setGameMode(gameState.getMode());
         for (int i = 0; i < users.length; i++) {
             IUserSocket iUserSocket = users[i];
             if(iUserSocket!=null) {
