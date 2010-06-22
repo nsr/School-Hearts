@@ -6,6 +6,7 @@ import hearts.defs.protocol.IServerSocket;
 import hearts.defs.state.GUIStateException;
 import hearts.defs.state.IGUIGameTable;
 import hearts.defs.state.IGUIPanel;
+import hearts.defs.state.IGUIPanel.Panel;
 import hearts.defs.state.IGUIState;
 import hearts.defs.state.IGameState;
 import hearts.defs.state.IGameState.Mode;
@@ -277,5 +278,5 @@ public class MainFrame
     public LobbyPanel getLobbyPanel() {
         return lobbyPanel;
     }
-   
+
 }

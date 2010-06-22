@@ -27,8 +27,8 @@ public class Lobby implements IMaintenaceListener{
 
     public Lobby(Server server) {
         this.server = server;
-        createTable("Asdf");
-        createTable("Asdf1");
+        //createTable("Asdf");
+        //createTable("Asdf1");
     }
 
     /**
@@ -68,6 +68,7 @@ public class Lobby implements IMaintenaceListener{
                 boolean success = (place!=null)?true:false;                                
                 CreateTableAnswer ans = new CreateTableAnswer(m.getTableName(), creationSuccess&&success);
                 m.getUserSocket().actionReceived(ans); //wysłanie odpowiedzi do klienta tworzącego stół
+                m.getUserSocket().actionReceived(tables.get(m.getTableName()).getTableUpdate());
             } else {
                 JoinTableMaintenance m = (JoinTableMaintenance)maintenance;
                 String tableName = m.getTableName();
@@ -75,7 +76,9 @@ public class Lobby implements IMaintenaceListener{
                 boolean success = (place!=null)?true:false;
                 JoinTableAnswer ans = new JoinTableAnswer(tableName, success, place);
                 m.getUserSocket().actionReceived(ans);
+                m.getUserSocket().actionReceived(tables.get(m.getTableName()).getTableUpdate());
             }
+
         }
     }
 

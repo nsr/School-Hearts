@@ -31,6 +31,7 @@ public class LobbyPanel extends javax.swing.JPanel implements IGUILobbyPanel, Mo
     IGUIState gui = null;
     LobbyTableModel model = new LobbyTableModel();
 
+
     /** Creates new form LobbyPanel */
     public LobbyPanel() {
         initComponents();
@@ -113,7 +114,7 @@ public class LobbyPanel extends javax.swing.JPanel implements IGUILobbyPanel, Mo
     }// </editor-fold>//GEN-END:initComponents
 
     private void createTableButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createTableButtonActionPerformed
-        CreateTableMaintenance ct = new CreateTableMaintenance(tableNameEdit.getText());
+        CreateTableMaintenance ct = new CreateTableMaintenance(tableNameEdit.getText());        
         gui.getSocket().maintenanceReceived(ct);
     }//GEN-LAST:event_createTableButtonActionPerformed
 

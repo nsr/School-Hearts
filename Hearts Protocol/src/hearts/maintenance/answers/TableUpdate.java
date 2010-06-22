@@ -41,7 +41,7 @@ public class TableUpdate extends AMaintenaceAction {
                 gui.getGameTable().setUser(i, players[i]);
             }
             gui.getGameTable().setMode(gameMode);
-        } else { // nie gramy tylko jesteśmy w Lobby
+        } else {
             LobbyTableInfo info = new LobbyTableInfo(tableName, owner, players, gameMode, removed);
             gui.getLobbyPanel().updateTable(info);
         }
