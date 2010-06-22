@@ -75,6 +75,8 @@ public class MainFrame
 
         gameTable.setGui(this);
 
+        lobbyPanel.setGui(this);
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle(TITLE);
         setBounds(new java.awt.Rectangle(0, 0, 0, 0));
@@ -249,11 +251,8 @@ public class MainFrame
                 getContentPane().remove(getCentralPanel());
                 JPanel jp = panels.get(p);
                 getContentPane().add(jp, BorderLayout.CENTER);
-                if (isValid()) {
-                    repaint();
-                } else {
-                    repaint();
-                }
+                validate();
+                repaint();
             }
         });
     }

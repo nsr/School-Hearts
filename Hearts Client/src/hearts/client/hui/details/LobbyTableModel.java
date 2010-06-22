@@ -74,4 +74,8 @@ public class LobbyTableModel extends AbstractTableModel{
         }
         fireTableDataChanged();
     }
+
+    public LobbyTableInfo getInfo(int x) {
+        return data.get(tables.get(x));
+    }
 }

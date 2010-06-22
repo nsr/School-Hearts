@@ -27,7 +27,8 @@ public class Lobby implements IMaintenaceListener{
 
     public Lobby(Server server) {
         this.server = server;
-        //createTable("Asdf");
+        createTable("Asdf");
+        createTable("Asdf1");
     }
 
     /**

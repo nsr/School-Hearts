@@ -25,7 +25,7 @@ public class TableUpdateList extends AMaintenaceAction{
 
     @Override
     public void perform(IGUIState gui) throws GUIStateException {
-        IGUILobbyPanel lobbyPanel = gui.getLobbyPanel();
+        //IGUILobbyPanel lobbyPanel = gui.getLobbyPanel();
         gui.setPanel(IGUIPanel.Panel.LOBBY);
         for(TableUpdate update: updates) {
             update.perform(gui);

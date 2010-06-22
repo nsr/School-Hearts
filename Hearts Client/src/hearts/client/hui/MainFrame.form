@@ -10,6 +10,9 @@
       </Properties>
     </Component>
     <Component class="hearts.client.hui.LobbyPanel" name="lobbyPanel">
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="lobbyPanel.setGui(this);"/>
+      </AuxValues>
     </Component>
     <Menu class="javax.swing.JMenuBar" name="mainMenuBar">
       <SubComponents>

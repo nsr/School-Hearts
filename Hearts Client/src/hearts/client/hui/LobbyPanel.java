@@ -15,9 +15,11 @@ import hearts.defs.state.IGUILobbyPanel;
 import hearts.defs.state.IGUIState;
 import hearts.defs.state.IGameState.Mode;
 import hearts.defs.state.LobbyTableInfo;
+import hearts.maintenance.JoinTableMaintenance;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import javax.swing.JFrame;
 import javax.swing.JTabbedPane;
 import javax.swing.ListSelectionModel;
 
@@ -103,11 +105,25 @@ public class LobbyPanel extends javax.swing.JPanel implements IGUILobbyPanel, Mo
     }
 
     public void mouseClicked(MouseEvent e) {
-        System.out.println("Show dialog.");
+        if (e.getClickCount() == 2) {
+            TableDetails details = new TableDetails(this, (LobbyTableInfo) model.getInfo(table.getSelectedRow()));
+            details.showInFrame();
+        }        
     }
 
-    public void mousePressed(MouseEvent e) {}
-    public void mouseReleased(MouseEvent e) {}
-    public void mouseEntered(MouseEvent e) {}
-    public void mouseExited(MouseEvent e) {}
+    public void mousePressed(MouseEvent e) {
+    }
+
+    public void mouseReleased(MouseEvent e) {
+    }
+
+    public void mouseEntered(MouseEvent e) {
+    }
+
+    public void mouseExited(MouseEvent e) {
+    }
+
+    void joinToTable(String tableName) {
+        gui.getSocket().maintenanceReceived(new JoinTableMaintenance(tableName, 0));
+    }
 }

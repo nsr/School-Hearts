@@ -44,7 +44,13 @@ public class LobbyTableInfo {
     }
 
     public int getPlayerCount() {
-        return players.length;
+        int count = 0;
+        for(int i = 0; i < 4; i++) {
+            if(players[i]!=null) {
+                count++;
+            }
+        }
+        return count;
     }
 
     public String getTableName() {
