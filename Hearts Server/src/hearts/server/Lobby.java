@@ -16,6 +16,7 @@ import hearts.maintenance.CreateTableMaintenance;
 import hearts.maintenance.JoinTableMaintenance;
 import hearts.maintenance.answers.CreateTableAnswer;
 import hearts.maintenance.answers.JoinTableAnswer;
+import hearts.maintenance.answers.TableUpdateList;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -77,13 +78,16 @@ public class Lobby implements IMaintenaceListener{
         }
     }
 
-    /**
-     * Wymusza na każdym stole, żeby wysłał do wszystkich informacje o sobie.
-     */
-    public void broadcastAllTables() {
+   /**
+    * Zwraca liste stołów z informacjami o graczach.
+    * @return j.w.
+    */
+    public TableUpdateList getUpdateList() {
+        TableUpdateList list = new TableUpdateList();
         for(StateGuard table: tables.values()) {
-            table.notifyAboutTableChange();
+            list.addUpdate(table.getTableUpdate());
         }
+        return list;
     }
 
 }

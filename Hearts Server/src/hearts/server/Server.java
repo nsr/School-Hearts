@@ -131,7 +131,7 @@ public class Server
                 sc.setName(m.getLogin());
                 sc.setLoggedIn(true);
                 sc.actionReceived(new LoginAnswer(true, "", m.getLogin()));
-                lobby.broadcastAllTables(); // powiadamia wszystkich o stołach które istnieją
+                sc.actionReceived(lobby.getUpdateList());
             } else {
                 sc.actionReceived(new LoginAnswer(false, "Bad username or password.", m.getLogin()));
             }
