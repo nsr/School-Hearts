@@ -5,9 +5,6 @@
 
 package hearts.server;
 
-import hearts.defs.actions.AAction;
-import hearts.defs.actions.IActionListener;
-import hearts.defs.actions.IActionNotifier;
 import hearts.defs.protocol.IMaintenaceListener;
 import hearts.defs.protocol.IMaintenance;
 import hearts.defs.protocol.IUserSocket;
@@ -17,7 +14,6 @@ import hearts.maintenance.JoinTableMaintenance;
 import hearts.maintenance.answers.CreateTableAnswer;
 import hearts.maintenance.answers.JoinTableAnswer;
 import hearts.maintenance.answers.TableUpdateList;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -31,6 +27,7 @@ public class Lobby implements IMaintenaceListener{
 
     public Lobby(Server server) {
         this.server = server;
+        //createTable("Asdf");
     }
 
     /**

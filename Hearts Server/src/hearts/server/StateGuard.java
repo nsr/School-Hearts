@@ -81,7 +81,14 @@ public class StateGuard implements IServerStateGuard {
     }
 
     public TableUpdate getTableUpdate() {
-        TableUpdate update = new TableUpdate(name, users[0].getName());
+        TableUpdate update = null;
+        IUserSocket user = users[0];
+        if(user!=null) {
+            update = new TableUpdate(name, user.getName());
+        } else {
+            update = new TableUpdate(name, null);
+        }
+        
         for (int i = 0; i < users.length; i++) {
             IUserSocket iUserSocket = users[i];
             if(iUserSocket!=null) {

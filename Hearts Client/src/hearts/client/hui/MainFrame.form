@@ -9,6 +9,8 @@
         </Property>
       </Properties>
     </Component>
+    <Component class="hearts.client.hui.LobbyPanel" name="lobbyPanel">
+    </Component>
     <Menu class="javax.swing.JMenuBar" name="mainMenuBar">
       <SubComponents>
         <Menu class="javax.swing.JMenu" name="gameMenu">

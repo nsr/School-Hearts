@@ -7,6 +7,7 @@ package hearts.maintenance.answers;
 import hearts.defs.state.GUIStateException;
 import hearts.defs.state.IGUIState;
 import hearts.defs.state.IGameState;
+import hearts.defs.state.LobbyTableInfo;
 
 /**
  *
@@ -40,6 +41,9 @@ public class TableUpdate extends AMaintenaceAction {
                 gui.getGameTable().setUser(i, players[i]);
             }
             gui.getGameTable().setMode(gameMode);
+        } else { // nie gramy tylko jesteśmy w Lobby
+            LobbyTableInfo info = new LobbyTableInfo(tableName, owner, players, gameMode, removed);
+            gui.getLobbyPanel().updateTable(info);
         }
     }
 }

@@ -41,7 +41,7 @@ public class MainFrame
     public MainFrame() {
         initComponents();
 
-        IGUIPanel[] panelsToAdd = {loginPanel, gameTable};
+        IGUIPanel[] panelsToAdd = {loginPanel, gameTable, lobbyPanel};
         for (IGUIPanel p : panelsToAdd) {
             panels.put(p.getPanelType(), (JPanel) p);
         }
@@ -60,6 +60,7 @@ public class MainFrame
     private void initComponents() {
 
         gameTable = new hearts.client.hui.GameTable();
+        lobbyPanel = new hearts.client.hui.LobbyPanel();
         loginPanel = new hearts.client.hui.LoginPanel();
         mainMenuBar = new javax.swing.JMenuBar();
         gameMenu = new javax.swing.JMenu();
@@ -190,6 +191,7 @@ public class MainFrame
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JSeparator jSeparator1;
+    private hearts.client.hui.LobbyPanel lobbyPanel;
     private hearts.client.hui.LoginPanel loginPanel;
     private javax.swing.JMenuBar mainMenuBar;
     private javax.swing.JMenuItem runTest1Item;
@@ -272,4 +274,9 @@ public class MainFrame
     public void setTitle(String title) {
         super.setTitle(TITLE + " : " + title);
     }
+
+    public LobbyPanel getLobbyPanel() {
+        return lobbyPanel;
+    }
+   
 }

@@ -6,6 +6,8 @@
 package hearts.maintenance.answers;
 
 import hearts.defs.state.GUIStateException;
+import hearts.defs.state.IGUILobbyPanel;
+import hearts.defs.state.IGUIPanel;
 import hearts.defs.state.IGUIState;
 import java.util.ArrayList;
 
@@ -23,7 +25,11 @@ public class TableUpdateList extends AMaintenaceAction{
 
     @Override
     public void perform(IGUIState gui) throws GUIStateException {
-        throw new UnsupportedOperationException("Not supported yet.");
+        IGUILobbyPanel lobbyPanel = gui.getLobbyPanel();
+        gui.setPanel(IGUIPanel.Panel.LOBBY);
+        for(TableUpdate update: updates) {
+            update.perform(gui);
+        }
     }
 
 }
