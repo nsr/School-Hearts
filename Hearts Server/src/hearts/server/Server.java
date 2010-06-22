@@ -122,12 +122,11 @@ public class Server
     public void maintenanceReceived(IMaintenance maintenance) {
 
         // LOGOWANIE ####################################################
-        // TODO: dodać sprawdzanie czy przypadkiem ktoś nie jest już zalogowany
         if(maintenance instanceof LoginMaintenance) {
             ServerClient sc = (ServerClient) maintenance.getUserSocket();
             LoginMaintenance m = (LoginMaintenance) maintenance;
             if(sc.isLoggedIn()) {
-                sc.actionReceived(new LoginAnswer(true, "", m.getLogin()));
+                sc.actionReceived(new LoginAnswer(false, "Użytkownik już jest zalogowany.", m.getLogin());
             } else if(authenticator.checkUser(m.getLogin(), m.getPassword())) {
                 sc.setName(m.getLogin());
                 sc.setLoggedIn(true);
