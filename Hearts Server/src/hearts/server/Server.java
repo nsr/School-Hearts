@@ -126,7 +126,7 @@ public class Server
             ServerClient sc = (ServerClient) maintenance.getUserSocket();
             LoginMaintenance m = (LoginMaintenance) maintenance;
             if(sc.isLoggedIn()) {
-                sc.actionReceived(new LoginAnswer(false, "Użytkownik już jest zalogowany.", m.getLogin());
+                sc.actionReceived(new LoginAnswer(false, "Użytkownik już jest zalogowany.", m.getLogin()));
             } else if(authenticator.checkUser(m.getLogin(), m.getPassword())) {
                 sc.setName(m.getLogin());
                 sc.setLoggedIn(true);
