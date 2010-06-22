@@ -33,12 +33,13 @@ public class StateGuard implements IServerStateGuard {
     IJudge judge = new Judge();
     IUserSocket[] users = new IUserSocket[4];
     int userCount = 0;
-    String name = "Dupa słonia.";
+    String name;
 
     Server server;
 
-    public StateGuard(Server server) {
+    public StateGuard(String name, Server server) {
         this.server = server;
+        this.name = name;
     }
 
     /**
@@ -75,7 +76,7 @@ public class StateGuard implements IServerStateGuard {
     /**
      * @param id
      */
-    private void notifyAboutTableChange() {
+    public void notifyAboutTableChange() {
         TableUpdate update = new TableUpdate(name, users[0].getName());
         for (int i = 0; i < users.length; i++) {
             IUserSocket iUserSocket = users[i];

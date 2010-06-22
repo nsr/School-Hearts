@@ -7,13 +7,13 @@ package hearts.server;
 import hearts.defs.actions.AAction;
 import hearts.defs.actions.IActionListener;
 import hearts.defs.actions.IActionNotifier;
-import hearts.defs.protocol.IServerSocket;
 import hearts.defs.state.GameConstants;
 import hearts.defs.state.GameStateException;
 import hearts.maintenance.CreateAccountMaintenance;
 import hearts.defs.protocol.IMaintenaceListener;
 import hearts.defs.protocol.IMaintenance;
 import hearts.defs.protocol.IUserSocket;
+import hearts.maintenance.JoinTableMaintenance;
 import hearts.maintenance.LoginMaintenance;
 import hearts.maintenance.answers.CreateAccountAnswer;
 import hearts.maintenance.answers.JoinTableAnswer;
@@ -41,7 +41,7 @@ public class Server
     private ArrayList<ServerClient> clientsList = null;
     private ArrayList<IActionListener> listeners = null;
 
-    private StateGuard table;
+    private Lobby lobby;
 
     private UserAuthenticator authenticator = new UserAuthenticator();
 
@@ -59,7 +59,7 @@ public class Server
         clientsList = new ArrayList<ServerClient>();
         listeners = new ArrayList<IActionListener>();
 
-        table = new StateGuard(this);
+        lobby = new Lobby(this);
     }
 
     /**
@@ -131,15 +131,7 @@ public class Server
                 sc.setName(m.getLogin());
                 sc.setLoggedIn(true);
                 sc.actionReceived(new LoginAnswer(true, "", m.getLogin()));
-
-                //dosadzanie pierwszego lepszego usera do stołu.
-                //to jest tymczasowe dla tego milestone'a
-                try {
-                    table.addUser(sc);
-                } catch (GameStateException ex) {
-                    Logger.getLogger(Server.class.getName()).log(Level.INFO, "Stół jest pełny.");
-                    sc.actionReceived(new JoinTableAnswer(table.getName(), Boolean.FALSE, GameConstants.NOT_IMPORTANT));
-                }
+                lobby.broadcastAllTables(); // powiadamia wszystkich o stołach które istnieją
             } else {
                 sc.actionReceived(new LoginAnswer(false, "Bad username or password.", m.getLogin()));
             }
@@ -165,6 +157,11 @@ public class Server
             this.clientsList.remove((ServerClient)(maintenance.getUserSocket()));
             Logger.getLogger(Server.class.getName()).log(Level.INFO, "Klient został rozłączony i jest usuwany z listy.\n" +
                     "Ilość podłączonych klientow: " + String.valueOf(clientsList.size()));
+        }
+
+        // Reszta jest do zarządzania Lobby więc leci do lobby.
+        if(maintenance instanceof JoinTableMaintenance) {
+            lobby.maintenanceReceived(maintenance);
         }
     }
 }
