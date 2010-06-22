@@ -119,14 +119,23 @@ public class Server
     public void actionReceived(AAction a) {
     }
 
+    private boolean alreadyLoggedIn(String login) {
+        for(ServerClient sc: clientsList) {
+            if(sc.getName().equals(login)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public void maintenanceReceived(IMaintenance maintenance) {
 
         // LOGOWANIE ####################################################
         if(maintenance instanceof LoginMaintenance) {
             ServerClient sc = (ServerClient) maintenance.getUserSocket();
             LoginMaintenance m = (LoginMaintenance) maintenance;
-            if(sc.isLoggedIn()) {
-                sc.actionReceived(new LoginAnswer(false, "Użytkownik już jest zalogowany.", m.getLogin()));
+            if(alreadyLoggedIn(m.getLogin())) {
+                sc.actionReceived(new LoginAnswer(false, "Użytkownik już jest zalogowany.", m.getLogin()));                
             } else if(authenticator.checkUser(m.getLogin(), m.getPassword())) {
                 sc.setName(m.getLogin());
                 sc.setLoggedIn(true);
