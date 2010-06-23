@@ -128,7 +128,7 @@ public class ServerClient implements IUserSocket, IMaintenanceNotifier {
             this.output.writeObject(a);
             this.output.flush();
         } catch (IOException ex) {
-            Logger.getLogger(ServerClient.class.getName()).log(Level.SEVERE, "Bład wysyłania akcji.", ex);
+            Logger.getLogger(ServerClient.class.getName()).log(Level.INFO, "Bład wysyłania akcji. Użytkownik rozłączony,");
         }
     }
 
@@ -137,7 +137,7 @@ public class ServerClient implements IUserSocket, IMaintenanceNotifier {
             this.output.writeObject(m);
             this.output.flush();
         } catch (IOException ex) {
-            Logger.getLogger(ServerClient.class.getName()).log(Level.SEVERE, "Bład wysyłania maintenece.", ex);
+            Logger.getLogger(ServerClient.class.getName()).log(Level.INFO, "Bład wysyłania maintenece. Użytkownik rozłączony");
         }
     }
 
