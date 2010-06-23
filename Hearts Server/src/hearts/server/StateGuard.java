@@ -12,6 +12,7 @@ import hearts.defs.state.GameConstants;
 import hearts.defs.state.GameStateException;
 import hearts.defs.state.IGameState;
 import hearts.defs.state.IServerStateGuard;
+import hearts.maintenance.answers.TableClosedAction;
 import hearts.maintenance.answers.TableUpdate;
 import hearts.state.DumbState;
 import hearts.state.GameState;
@@ -19,6 +20,8 @@ import hearts.state.Judge;
 import hearts.state.UserState;
 import hearts.state.actions.FirstModeAction;
 import hearts.state.exceptions.ExceptionGUIAction;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Klasa implementująca StateGuarda
@@ -70,6 +73,23 @@ public class StateGuard implements IServerStateGuard {
         }
         
         return userCount - 1;
+    }
+
+    public void notifyCloseTable() {
+        for(int i = 0; i<4; i++) {
+                if(users[i] != null) {
+                    users[i].actionReceived(new TableClosedAction());
+                }
+        }
+    }
+
+    public boolean hasUser(IUserSocket s) {
+        for(IUserSocket sock: users) {
+            if(sock == s) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**

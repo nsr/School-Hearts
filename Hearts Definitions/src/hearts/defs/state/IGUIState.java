@@ -33,4 +33,6 @@ public interface IGUIState extends IActionListener, IGUIPanel {
     public IGUILobbyPanel getLobbyPanel();
 
     public void setTitle(String title);
+
+    public void newGamePanel();
 }

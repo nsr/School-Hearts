@@ -279,4 +279,8 @@ public class MainFrame
         return lobbyPanel;
     }
 
+    public void newGamePanel() {
+        this.gameTable = new GameTable();
+    }
+
 }

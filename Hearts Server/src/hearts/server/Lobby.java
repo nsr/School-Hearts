@@ -13,6 +13,7 @@ import hearts.maintenance.CreateTableMaintenance;
 import hearts.maintenance.JoinTableMaintenance;
 import hearts.maintenance.answers.CreateTableAnswer;
 import hearts.maintenance.answers.JoinTableAnswer;
+import hearts.maintenance.answers.TableUpdate;
 import hearts.maintenance.answers.TableUpdateList;
 import java.util.HashMap;
 
@@ -79,6 +80,16 @@ public class Lobby implements IMaintenaceListener{
                 m.getUserSocket().actionReceived(tables.get(m.getTableName()).getTableUpdate());
             }
 
+        } else if (maintenance instanceof ClientDisconnectedMaintenance) {
+            for(StateGuard s: tables.values()) {
+                if(s.hasUser(maintenance.getUserSocket())) {
+                    s.notifyCloseTable();
+                    tables.remove(s.getName());
+                    TableUpdate up = s.getTableUpdate();
+                    up.setRemoved(true);
+                    server.notifyListeners(up);
+                }                
+            }
         }
     }
 

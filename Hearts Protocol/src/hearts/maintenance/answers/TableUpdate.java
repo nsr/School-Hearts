@@ -38,6 +38,10 @@ public class TableUpdate extends AMaintenaceAction {
         players[place] = name;
     }
 
+    public void setRemoved(Boolean removed) {
+        this.removed = removed;
+    }
+
     @Override
     public void perform(IGUIState gui) throws GUIStateException {
         String guiTableName = gui.getGameTable().getTableName();
@@ -46,9 +50,8 @@ public class TableUpdate extends AMaintenaceAction {
                 gui.getGameTable().setUser(i, players[i]);
             }
             gui.getGameTable().setMode(gameMode);
-        } else {
-            LobbyTableInfo info = new LobbyTableInfo(tableName, owner, players, gameMode, removed);
-            gui.getLobbyPanel().updateTable(info);
         }
+        LobbyTableInfo info = new LobbyTableInfo(tableName, owner, players, gameMode, removed);
+        gui.getLobbyPanel().updateTable(info);
     }
 }

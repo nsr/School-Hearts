@@ -76,6 +76,7 @@ public class Server
                 ServerClient sc = new ServerClient(s);
                 sc.addActionListener(this);
                 sc.addMaintenanceListener(this);
+                sc.addMaintenanceListener(lobby);
                 this.addActionListener((IUserSocket)sc);
                 clientsList.add(sc);
                 Thread th = new Thread(sc);
@@ -169,8 +170,8 @@ public class Server
         }
 
         // Reszta jest do zarządzania Lobby więc leci do lobby.
-        if(maintenance instanceof JoinTableMaintenance) {
-            lobby.maintenanceReceived(maintenance);
-        }
+        //if(maintenance instanceof JoinTableMaintenance) {
+        //    lobby.maintenanceReceived(maintenance);
+        //}
     }
 }
