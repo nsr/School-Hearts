@@ -21,7 +21,7 @@ import java.util.logging.Logger;
 public class UserAuthenticator {
 
     private Properties userList = null;
-    private String fileName = "userList";
+    private String fileName = ConfigReader.getUserList();
 
     public UserAuthenticator() {
         loadProperties();

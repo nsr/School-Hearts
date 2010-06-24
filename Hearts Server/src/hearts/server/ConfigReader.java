@@ -18,33 +18,28 @@ import java.util.logging.Logger;
  * @author Michał Charmas
  */
 public class ConfigReader {
-    private String configFile;
-    private Properties config = null;
+    static private String configFile = "config";
+    static private Properties config = null;
 
-    /**
-     * Tworzy obiekt Config readera.
-     * Domyślny host = localhost
-     * Domyślny port = 9999
-     * @param configFile ścieżka do pliku z konfiguracją. Jeśli null to domyślnie "config"
-     */
-    public ConfigReader(String configFile) throws Exception {
-        if(configFile!=null) {
-            this.configFile = configFile;
+    public static void setConfig(String config) throws Exception {
+        if(config!=null) {
+            ConfigReader.configFile = config;
         } else {
-            this.configFile = "config";
+            ConfigReader.configFile = "config";
         }
 
-        File cfile = new File(this.configFile);
+        File cfile = new File(ConfigReader.configFile);
         if(cfile.isDirectory()) {
             throw new Exception("Plik konfiguracyjny nie może być katalogiem.");
         }
     }
 
+
     /**
      * Zwraca hosta.
      * @return
      */
-    public String getHost() {
+    public static String getHost() {
         if(config == null) {
             loadConfigFile();
         }
@@ -55,7 +50,7 @@ public class ConfigReader {
      * Zwraca port;
      * @return
      */
-    public int getPort() {
+    public static int getPort() {
         if(config == null) {
             loadConfigFile();
         }
@@ -63,9 +58,21 @@ public class ConfigReader {
     }
 
     /**
+     * Zwraca sciezke listy uzytkownikow.
+     * @return
+     */
+    public static String getUserList() {
+        if(config == null) {
+            loadConfigFile();
+        }
+        return config.getProperty("userList", "config");
+    }
+
+
+    /**
      * Ładuje plik konfiguracyjny. W razie gdy go nie ma wywołuje metodę tworzącą go.
      */
-    private void loadConfigFile() {
+    private static void loadConfigFile() {
         try {
             FileInputStream fis = new FileInputStream(new File(configFile));
             config = new Properties();
@@ -82,12 +89,13 @@ public class ConfigReader {
      * Domyślny host = localhost
      * Domyślny port = 9999
      */
-    private void createDefaultConfigFile() {
+    private static void createDefaultConfigFile() {
         try {
             FileOutputStream fos = new FileOutputStream(new File(configFile));
             config = new Properties();
             config.setProperty("host", "localhost");
             config.setProperty("port", "9999");
+            config.setProperty("userList", System.getProperty("user.dir") + System.getProperty("file.separator")+"userList");
             config.store(fos, "-------------");
             fos.close();
         } catch (IOException ex) {

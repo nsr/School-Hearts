@@ -19,14 +19,11 @@ public class Main {
      */
     public static void main(String[] args) {
         try {
-            ConfigReader reader;
             if (args.length == 1) {
-                reader = new ConfigReader(args[0]);
-            } else {
-                reader = new ConfigReader(null);
+               ConfigReader.setConfig(args[0]);
             }
 
-            Server s = new Server(reader.getPort(), reader.getHost());
+            Server s = new Server(ConfigReader.getPort(), ConfigReader.getHost());
             Thread th = new Thread(s);
             th.start();
         } catch (NumberFormatException ex) {
