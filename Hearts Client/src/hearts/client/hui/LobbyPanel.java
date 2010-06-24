@@ -162,6 +162,7 @@ public class LobbyPanel extends javax.swing.JPanel implements IGUILobbyPanel, Mo
     private void createTableButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createTableButtonActionPerformed
         CreateTableMaintenance ct = new CreateTableMaintenance(tableNameEdit.getText());        
         gui.getSocket().maintenanceReceived(ct);
+        tableNameEdit.setText("");
     }//GEN-LAST:event_createTableButtonActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
