@@ -8,8 +8,6 @@ import hearts.defs.state.IGUIGameTable;
 import hearts.defs.state.IGUIPanel;
 import hearts.defs.state.IGUIPanel.Panel;
 import hearts.defs.state.IGUIState;
-import hearts.defs.state.IGameState;
-import hearts.defs.state.IGameState.Mode;
 import hearts.defs.state.ILoginPanel;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -281,6 +279,10 @@ public class MainFrame
 
     public void newGamePanel() {
         this.gameTable = new GameTable();
+    }
+
+    public void newLobbyPanel() {
+        this.lobbyPanel = new LobbyPanel();
     }
 
 }
