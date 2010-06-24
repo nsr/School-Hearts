@@ -176,10 +176,8 @@ public class Server
 
     public UserListUpdated getUserList() {
         String[] players = new String[clientsList.size()];
-        int i = 0;
-        for (ServerClient sc : clientsList) {
-            players[i] = sc.getName();
-            i++;
+        for(int i = 0; i<clientsList.size(); i++) {
+            players[i] = clientsList.get(i).getName();
         }
         return new UserListUpdated(players);
     }
