@@ -18,6 +18,7 @@ import hearts.maintenance.answers.LoginAnswer;
 import hearts.maintenance.answers.UserListUpdated;
 import java.io.IOException;
 import java.net.Socket;
+import java.nio.channels.SocketChannel;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -126,6 +127,12 @@ public class Server
         return false;
     }
 
+    private void removeClient(ServerClient sc) {
+        sc.disconnect();
+        clientsList.remove(sc);
+        listeners.remove(sc);
+    }
+
     public void maintenanceReceived(IMaintenance maintenance) {
 
         // LOGOWANIE ####################################################
@@ -134,6 +141,7 @@ public class Server
             LoginMaintenance m = (LoginMaintenance) maintenance;
             if (alreadyLoggedIn(m.getLogin())) {
                 sc.actionReceived(new LoginAnswer(false, "Użytkownik już jest zalogowany.", m.getLogin()));
+                removeClient(sc);
             } else if (authenticator.checkUser(m.getLogin(), m.getPassword())) {
                 sc.setName(m.getLogin());
                 sc.setLoggedIn(true);
@@ -141,7 +149,8 @@ public class Server
                 sc.actionReceived(lobby.getUpdateList());
                 notifyListeners(getUserList());
             } else {
-                sc.actionReceived(new LoginAnswer(false, "Bad username or password.", m.getLogin()));
+                sc.actionReceived(new LoginAnswer(false, "Zły użytkownik lub hasło.", m.getLogin()));
+                removeClient(sc);
             }
         }
 
@@ -154,15 +163,16 @@ public class Server
                     sc.actionReceived(new CreateAccountAnswer(true, null));
                     Logger.getLogger(Server.class.getName()).log(Level.INFO, "Konto zostało założone: " + m.getLogin());
                 } else {
-                    sc.actionReceived(new CreateAccountAnswer(false, "User already exists."));
+                    sc.actionReceived(new CreateAccountAnswer(false, "Podany użytkownik już istnieje."));
                     Logger.getLogger(Server.class.getName()).log(Level.INFO, "Błąd zakładania konta! Użytkownik już istniał: " + m.getLogin());
                 }
             }
+            removeClient(sc);
         }
 
         // ZAKOŃCZENIE WĄTKU KLIENTA ######################################
         if (maintenance instanceof ClientDisconnectedMaintenance) {
-            this.clientsList.remove((ServerClient) (maintenance.getUserSocket()));
+            removeClient((ServerClient) maintenance.getUserSocket());
             Logger.getLogger(Server.class.getName()).log(Level.INFO, "Klient został rozłączony i jest usuwany z listy.\n" +
                     "Ilość podłączonych klientow: " + String.valueOf(clientsList.size()));
             notifyListeners(getUserList());
