@@ -211,7 +211,7 @@ public class ServerClient implements IUserSocket, IMaintenanceNotifier {
     public void setLoggedIn(boolean loggedIn) {
         this.loggedIn = loggedIn;
         if(loggedIn) {
-            Logger.getLogger(ServerClient.class.getName()).log(Level.SEVERE, "Użytkownik " + this.getName() + " został zalogowany.");
+            Logger.getLogger(ServerClient.class.getName()).log(Level.INFO, "Użytkownik " + this.getName() + " został zalogowany.");
         }
     }
 

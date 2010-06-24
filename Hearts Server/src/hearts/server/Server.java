@@ -18,6 +18,7 @@ import hearts.maintenance.LoginMaintenance;
 import hearts.maintenance.answers.CreateAccountAnswer;
 import hearts.maintenance.answers.JoinTableAnswer;
 import hearts.maintenance.answers.LoginAnswer;
+import hearts.maintenance.answers.UserListUpdated;
 import java.io.IOException;
 import java.net.Socket;
 import java.util.ArrayList;
@@ -40,9 +41,7 @@ public class Server
     private java.net.ServerSocket socket = null;
     private ArrayList<ServerClient> clientsList = null;
     private ArrayList<IActionListener> listeners = null;
-
     private Lobby lobby;
-
     private UserAuthenticator authenticator = new UserAuthenticator();
 
     /**
@@ -77,7 +76,7 @@ public class Server
                 sc.addActionListener(this);
                 sc.addMaintenanceListener(this);
                 sc.addMaintenanceListener(lobby);
-                this.addActionListener((IUserSocket)sc);
+                this.addActionListener((IUserSocket) sc);
                 clientsList.add(sc);
                 Thread th = new Thread(sc);
                 th.start();
@@ -112,7 +111,7 @@ public class Server
      * @param action o której powiadamia
      */
     public synchronized void notifyListeners(AAction action) {
-        for(IActionListener listener: listeners) {
+        for (IActionListener listener : listeners) {
             listener.actionReceived(action);
         }
     }
@@ -121,8 +120,8 @@ public class Server
     }
 
     private boolean alreadyLoggedIn(String login) {
-        for(ServerClient sc: clientsList) {
-            if(sc.getName().equals(login)) {
+        for (ServerClient sc : clientsList) {
+            if (sc.getName().equals(login)) {
                 return true;
             }
         }
@@ -132,27 +131,28 @@ public class Server
     public void maintenanceReceived(IMaintenance maintenance) {
 
         // LOGOWANIE ####################################################
-        if(maintenance instanceof LoginMaintenance) {
+        if (maintenance instanceof LoginMaintenance) {
             ServerClient sc = (ServerClient) maintenance.getUserSocket();
             LoginMaintenance m = (LoginMaintenance) maintenance;
-            if(alreadyLoggedIn(m.getLogin())) {
-                sc.actionReceived(new LoginAnswer(false, "Użytkownik już jest zalogowany.", m.getLogin()));                
-            } else if(authenticator.checkUser(m.getLogin(), m.getPassword())) {
+            if (alreadyLoggedIn(m.getLogin())) {
+                sc.actionReceived(new LoginAnswer(false, "Użytkownik już jest zalogowany.", m.getLogin()));
+            } else if (authenticator.checkUser(m.getLogin(), m.getPassword())) {
                 sc.setName(m.getLogin());
                 sc.setLoggedIn(true);
                 sc.actionReceived(new LoginAnswer(true, "", m.getLogin()));
                 sc.actionReceived(lobby.getUpdateList());
+                notifyListeners(getUserList());
             } else {
                 sc.actionReceived(new LoginAnswer(false, "Bad username or password.", m.getLogin()));
             }
         }
 
         // ZAKŁADANIE KONTA ##############################################
-        if(maintenance instanceof CreateAccountMaintenance) {
+        if (maintenance instanceof CreateAccountMaintenance) {
             ServerClient sc = (ServerClient) maintenance.getUserSocket();
             CreateAccountMaintenance m = (CreateAccountMaintenance) maintenance;
-            if(m.getLogin() != null && m.getPassword()!=null) {
-                if(authenticator.addUser(m.getLogin(), m.getPassword())) {
+            if (m.getLogin() != null && m.getPassword() != null) {
+                if (authenticator.addUser(m.getLogin(), m.getPassword())) {
                     sc.actionReceived(new CreateAccountAnswer(true, null));
                     Logger.getLogger(Server.class.getName()).log(Level.INFO, "Konto zostało założone: " + m.getLogin());
                 } else {
@@ -163,15 +163,26 @@ public class Server
         }
 
         // ZAKOŃCZENIE WĄTKU KLIENTA ######################################
-        if(maintenance instanceof ClientDisconnectedMaintenance) {            
-            this.clientsList.remove((ServerClient)(maintenance.getUserSocket()));
+        if (maintenance instanceof ClientDisconnectedMaintenance) {
+            this.clientsList.remove((ServerClient) (maintenance.getUserSocket()));
             Logger.getLogger(Server.class.getName()).log(Level.INFO, "Klient został rozłączony i jest usuwany z listy.\n" +
                     "Ilość podłączonych klientow: " + String.valueOf(clientsList.size()));
+            notifyListeners(getUserList());
         }
 
         // Reszta jest do zarządzania Lobby więc leci do lobby.
         //if(maintenance instanceof JoinTableMaintenance) {
         //    lobby.maintenanceReceived(maintenance);
         //}
+    }
+
+    public UserListUpdated getUserList() {
+        String[] players = new String[clientsList.size()];
+        int i = 0;
+        for (ServerClient sc : clientsList) {
+            players[i] = sc.getName();
+            i++;
+        }
+        return new UserListUpdated(players);
     }
 }

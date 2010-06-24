@@ -11,4 +11,5 @@ package hearts.defs.state;
  */
 public interface IGUILobbyPanel extends IGUIPanel {
     public void updateTable(LobbyTableInfo info);
+    public void setPlayerList(String[] players);
 }
