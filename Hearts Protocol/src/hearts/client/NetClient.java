@@ -71,7 +71,7 @@ public class NetClient implements IServerSocket {
                 }
             }
         } catch (IOException ex) {
-            Logger.getLogger(NetClient.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(NetClient.class.getName()).log(Level.SEVERE, "Serwer się rozłączył.");
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(NetClient.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
