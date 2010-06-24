@@ -11,8 +11,8 @@ import hearts.defs.state.IGameState.Mode;
 import hearts.defs.state.LobbyTableInfo;
 
 /**
- *
- * @author orbit
+ * Klasa zawierająca informacje o stole.
+ * @author Michał Charmas
  */
 public class TableUpdate extends AMaintenaceAction {
 
@@ -22,6 +22,11 @@ public class TableUpdate extends AMaintenaceAction {
     private IGameState.Mode gameMode = IGameState.Mode.WAITING_FOR_PLAYERS;
     private Boolean removed = Boolean.FALSE;
 
+    /**
+     * Konstruktor.
+     * @param tableName nazwa stołów którego ta informacja dotyczy
+     * @param owner właściciel stołu
+     */
     public TableUpdate(String tableName, String owner) {
         this.tableName = tableName;
         this.owner = owner;
@@ -42,6 +47,15 @@ public class TableUpdate extends AMaintenaceAction {
         this.removed = removed;
     }
 
+    /**
+     * Gdy rozgrywka trwa i powiadomienie dotyczy stołu na którym aktualnie gra użytkownik:
+     * - ustawianie informacji o graczach przy stole (kto gdzie siedzi)
+     * - ustawienie aktualnego etapu rozgrywki
+     *
+     * Oprócz tego za każdym razem gdy dostaniemy ten obiekt uaktualniamy informacje w lobby o stołach.
+     * @param gui
+     * @throws GUIStateException
+     */
     @Override
     public void perform(IGUIState gui) throws GUIStateException {
         String guiTableName = gui.getGameTable().getTableName();

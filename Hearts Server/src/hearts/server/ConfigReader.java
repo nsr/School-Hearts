@@ -14,8 +14,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *
- * @author orbit
+ * Klasa do obsługi pliku konfiguracyjnego.
+ * @author Michał Charmas
  */
 public class ConfigReader {
     private String configFile;

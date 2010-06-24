@@ -11,8 +11,8 @@ import hearts.defs.state.IGUIState;
 import javax.swing.JOptionPane;
 
 /**
- *
- * @author orbit
+ * Odpowiedź na dołączenie do stołu.
+ * @author Michał Charmas
  */
 public class JoinTableAnswer extends AMaintenaceAction {
 
@@ -20,12 +20,24 @@ public class JoinTableAnswer extends AMaintenaceAction {
     private Boolean success;
     private int place;
 
+    /**
+     * Odpowiedź na połączenie do stołu.
+     * Klasa utworzona na potrzeby lobby.
+     * @param tableName - nazwa stołu którego dotyczy odpowiedź
+     * @param success - czy się udało
+     * @param place - miejsce na które posadziło użytkownika
+     */
     public JoinTableAnswer(String tableName, Boolean success, int place) {
         this.tableName = tableName;
         this.success = success;
         this.place = place;
     }
 
+    /**
+     * Ta metoda inicjalizuje stół i zmienia główny panel w GUI na panel gry.
+     * @param gui
+     * @throws GUIStateException
+     */
     @Override
     public void perform(IGUIState gui) throws GUIStateException {
         if (success) {

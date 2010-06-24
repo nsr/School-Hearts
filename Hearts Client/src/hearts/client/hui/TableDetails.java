@@ -19,14 +19,20 @@ import hearts.maintenance.JoinTableMaintenance;
 import javax.swing.JFrame;
 
 /**
- *
- * @author orbit
+ * Panel wyświetlający szczegółowe informacje o stole.
+ * Umożliwia połączenie do stołu.
+ * @author Michał Charmas
  */
 public class TableDetails extends javax.swing.JPanel {
     JFrame frame = new JFrame();
     String tableName = null;
     LobbyPanel panel;
-    /** Creates new form TableDetails */
+
+    /**
+     * Konstruktor.
+     * @param panel - panel potrzebny do wysłania akcji dołączenia do stołu
+     * @param info - informacja o stole
+     */
     public TableDetails(LobbyPanel panel, LobbyTableInfo info) {
         initComponents();
         this.panel = panel;
@@ -210,7 +216,10 @@ public class TableDetails extends javax.swing.JPanel {
     private javax.swing.JButton sitButton;
     // End of variables declaration//GEN-END:variables
 
-    void showInFrame() {
+    /**
+     * Pokazuje siebie w oddzielnym frejmie.
+     */
+    public void showInFrame() {
         frame.add(this);
         frame.pack();
         frame.setVisible(true);

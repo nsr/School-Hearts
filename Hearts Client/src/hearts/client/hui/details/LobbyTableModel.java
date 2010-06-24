@@ -13,8 +13,8 @@ import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableModel;
 
 /**
- *
- * @author orbit
+ * Model dla tabeli stołów w gui.
+ * @author Michał Charmas
  */
 public class LobbyTableModel extends AbstractTableModel{
 
@@ -59,6 +59,12 @@ public class LobbyTableModel extends AbstractTableModel{
         }        
     }
 
+    /**
+     * Aktualizuje informacje o danym stole.
+     * Jeżeli stół został usunięty usuwa go z modelu.
+     * Zmusza tabelę do odświeżenia.
+     * @param info
+     */
     public void update(LobbyTableInfo info) {
         if(info.isRemoved()) {
             tables.remove(info.getTableName());
@@ -75,6 +81,11 @@ public class LobbyTableModel extends AbstractTableModel{
         fireTableDataChanged();
     }
 
+    /**
+     * Zwraca szczegółowe informacje o danym stole.
+     * @param x - który stół z tabeli
+     * @return
+     */
     public LobbyTableInfo getInfo(int x) {
         return data.get(tables.get(x));
     }

@@ -18,14 +18,22 @@ import hearts.maintenance.answers.TableUpdateList;
 import java.util.HashMap;
 
 /**
- *
- * @author orbit
+ * Klasa obsługująca lobby.
+ * @author Michał Charmas
  */
 public class Lobby implements IMaintenaceListener{
 
+    /**
+     * Mapa stołów po nazwach.
+     */
     private HashMap<String, StateGuard> tables = new HashMap<String, StateGuard>();
+
     private Server server;
 
+    /**
+     * Konstruktor.
+     * @param server Referencja do serwera.
+     */
     public Lobby(Server server) {
         this.server = server;
         //createTable("Asdf");
@@ -60,6 +68,13 @@ public class Lobby implements IMaintenaceListener{
         }
     }
 
+    /**
+     * Bierze pod uwagę tylko Akcje typu:
+     * - JoinTableMaintenance - stara się dołączyć użytkownika do stołu, wysyła odpowiedź czy się udało
+     * - CreateTableMaintennace - stara się utworzyć stół o podanej nazwie, sadza użytkownika do danego stołu i wysyła odpowiedź czy się udało
+     * - ClientDisconnectedMaintanence - rozłącza wszystkich użytkowników przy danym stole wracając ich do lobby, usuwa stół
+     * @param maintenance
+     */
     public void maintenanceReceived(IMaintenance maintenance) {
         if ( maintenance instanceof JoinTableMaintenance ) {
             if (maintenance instanceof CreateTableMaintenance) {

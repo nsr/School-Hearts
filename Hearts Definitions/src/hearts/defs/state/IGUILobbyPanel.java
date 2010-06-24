@@ -6,8 +6,8 @@
 package hearts.defs.state;
 
 /**
- *
- * @author orbit
+ * Interfejst Panelu Lobby w GUI
+ * @author Michał Charmas
  */
 public interface IGUILobbyPanel extends IGUIPanel {
     public void updateTable(LobbyTableInfo info);

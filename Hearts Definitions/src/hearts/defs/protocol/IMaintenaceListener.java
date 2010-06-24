@@ -6,8 +6,8 @@
 package hearts.defs.protocol;
 
 /**
- * 
- * @author orbit
+ * Interfejs listenera akcji Maintenance
+ * @author Michał Charmas
  */
 public interface IMaintenaceListener {
     /**

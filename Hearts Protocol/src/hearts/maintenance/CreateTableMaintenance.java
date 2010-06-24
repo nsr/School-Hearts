@@ -6,8 +6,8 @@
 package hearts.maintenance;
 
 /**
- *
- * @author orbit
+ * Akcja tworzenia stołu.
+ * @author Michał Charmas
  */
 public class CreateTableMaintenance extends JoinTableMaintenance {
 

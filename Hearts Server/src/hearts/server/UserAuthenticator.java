@@ -13,8 +13,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *
- * @author orbit
+ * Klasa autoryzująca użytkowników.
+ * Czyta z pliku properties i do niego zapisuje.
+ * Zajmuje się też rejestrowaniem nowych użytkowników.
+ * @author Michał Charmas
  */
 public class UserAuthenticator {
 

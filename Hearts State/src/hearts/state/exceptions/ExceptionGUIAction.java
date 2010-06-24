@@ -13,8 +13,8 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
- *
- * @author orbit
+ * 
+ * @author Michał Charmas
  */
 public class ExceptionGUIAction extends AGUIAction {
 

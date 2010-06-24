@@ -12,8 +12,9 @@ import hearts.defs.state.IGUIState;
 import java.util.ArrayList;
 
 /**
- *
- * @author orbit
+ * Kontener zawierający TableUpdate's
+ * Potrzebny żeby wysłać uzytkownikowi informację o wszystkich stołach po zalogowaniu.
+ * @author Michał Charmas
  */
 public class TableUpdateList extends AMaintenaceAction{
     

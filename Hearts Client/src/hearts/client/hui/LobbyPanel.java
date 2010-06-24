@@ -25,15 +25,14 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
 /**
- *
- * @author orbit
+ * Panel zawierający lobby.
+ * @author Michał Charmas
  */
 public class LobbyPanel extends javax.swing.JPanel implements IGUILobbyPanel, MouseListener, DocumentListener {
 
     IGUIState gui = null;
     LobbyTableModel model = new LobbyTableModel();
-
-
+    
     /** Creates new form LobbyPanel */
     public LobbyPanel() {
         initComponents();
@@ -235,6 +234,10 @@ public class LobbyPanel extends javax.swing.JPanel implements IGUILobbyPanel, Mo
         }
     }
 
+    /**
+     * Ustawia listę playerów w gui.
+     * @param players
+     */
     public void setPlayerList(String[] players) {
         DefaultListModel lModel = new DefaultListModel();
         Arrays.sort(players);

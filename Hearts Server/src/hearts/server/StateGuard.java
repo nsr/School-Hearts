@@ -20,8 +20,6 @@ import hearts.state.Judge;
 import hearts.state.UserState;
 import hearts.state.actions.FirstModeAction;
 import hearts.state.exceptions.ExceptionGUIAction;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * Klasa implementująca StateGuarda
@@ -75,6 +73,9 @@ public class StateGuard implements IServerStateGuard {
         return userCount - 1;
     }
 
+    /**
+     * Powiadamia wszystkich siedzących przy stole, że stół jest zamykany.
+     */
     public void notifyCloseTable() {
         for(int i = 0; i<4; i++) {
                 if(users[i] != null) {
@@ -83,6 +84,11 @@ public class StateGuard implements IServerStateGuard {
         }
     }
 
+    /**
+     * Zwraca czy przy stole siedzi gracz o danym sockecie.
+     * @param s socket
+     * @return
+     */
     public boolean hasUser(IUserSocket s) {
         for(IUserSocket sock: users) {
             if(sock == s) {
@@ -93,12 +99,17 @@ public class StateGuard implements IServerStateGuard {
     }
 
     /**
+     * Powiadamia o zmianach na stole.
      * @param id
      */
     private void notifyAboutTableChange() {
         server.notifyListeners(getTableUpdate());
     }
 
+    /**
+     * Tworzy obiekt z informacją o statusie stołu.
+     * @return obiekt z informacją o stanie stołu
+     */
     public TableUpdate getTableUpdate() {
         TableUpdate update = null;
         IUserSocket user = users[0];

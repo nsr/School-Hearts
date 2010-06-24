@@ -9,8 +9,8 @@ import hearts.defs.state.GUIStateException;
 import hearts.defs.state.IGUIState;
 
 /**
- *
- * @author orbit
+ * Klasa zawierająca listę użytkowników zalogowanych na serwerze.
+ * @author Michał Charmas
  */
 public class UserListUpdated extends AMaintenaceAction{
 
@@ -20,6 +20,11 @@ public class UserListUpdated extends AMaintenaceAction{
         this.players = players;
     }
 
+    /**
+     * Uaktualnia listę użytkowników w GUI.
+     * @param gui
+     * @throws GUIStateException
+     */
     @Override
     public void perform(IGUIState gui) throws GUIStateException {
         gui.getLobbyPanel().setPlayerList(players);

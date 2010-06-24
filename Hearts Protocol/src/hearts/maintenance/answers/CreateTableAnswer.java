@@ -6,8 +6,9 @@
 package hearts.maintenance.answers;
 
 /**
- *
- * @author orbit
+ * Odpowiedź na utworzenie stołu.
+ * Żeby zrozumieć zobacz JoinTableAnswer.
+ * @author Michał Charmas
  */
 public class CreateTableAnswer extends JoinTableAnswer {
 
