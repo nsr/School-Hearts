@@ -33,6 +33,8 @@ public class Main {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, "Błąd startowania serwera.\nBłędny port w konfiguracji.");
         } catch (IOException ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, "Błąd startowania serwera", ex);
+        } catch (Exception ex) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, "Błąd startowania serwera.\nPlik konfiguracyjny nie może być katalogiem.");
         }
 
     }

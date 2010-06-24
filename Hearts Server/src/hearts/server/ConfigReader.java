@@ -27,11 +27,16 @@ public class ConfigReader {
      * Domyślny port = 9999
      * @param configFile ścieżka do pliku z konfiguracją. Jeśli null to domyślnie "config"
      */
-    public ConfigReader(String configFile) {
+    public ConfigReader(String configFile) throws Exception {
         if(configFile!=null) {
             this.configFile = configFile;
         } else {
             this.configFile = "config";
+        }
+
+        File cfile = new File(this.configFile);
+        if(cfile.isDirectory()) {
+            throw new Exception("Plik konfiguracyjny nie może być katalogiem.");
         }
     }
 
