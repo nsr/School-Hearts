@@ -8,15 +8,12 @@ import hearts.defs.actions.AAction;
 import hearts.defs.actions.IActionListener;
 import hearts.defs.actions.IActionNotifier;
 import hearts.defs.state.GameConstants;
-import hearts.defs.state.GameStateException;
 import hearts.maintenance.CreateAccountMaintenance;
 import hearts.defs.protocol.IMaintenaceListener;
 import hearts.defs.protocol.IMaintenance;
 import hearts.defs.protocol.IUserSocket;
-import hearts.maintenance.JoinTableMaintenance;
 import hearts.maintenance.LoginMaintenance;
 import hearts.maintenance.answers.CreateAccountAnswer;
-import hearts.maintenance.answers.JoinTableAnswer;
 import hearts.maintenance.answers.LoginAnswer;
 import hearts.maintenance.answers.UserListUpdated;
 import java.io.IOException;
@@ -68,6 +65,7 @@ public class Server
      */
     public void run() {
         Logger.getLogger(Server.class.getName()).log(Level.INFO, "Wystartowałem!");
+        Logger.getLogger(Server.class.getName()).log(Level.INFO, "Działam na hoście: " + host + ":" + port);
         try {
             while (true) {
                 Socket s = this.socket.accept();
