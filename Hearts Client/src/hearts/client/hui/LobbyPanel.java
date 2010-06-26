@@ -39,7 +39,12 @@ public class LobbyPanel extends javax.swing.JPanel implements IGUILobbyPanel, Mo
         table.setModel(model);
         table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         table.addMouseListener(this);
+
+        //TableRowSorter<LobbyTableModel> sorter = new TableRowSorter<LobbyTableModel>();
+        //table.setRowSorter(sorter);
+
         tableNameEdit.getDocument().addDocumentListener(this);
+        
     }
 
     /** This method is called from within the constructor to
