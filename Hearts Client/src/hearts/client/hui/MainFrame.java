@@ -1,5 +1,6 @@
 package hearts.client.hui;
 
+import hearts.client.hui.details.RulesDialog;
 import hearts.defs.actions.AAction;
 import hearts.defs.actions.gui.AGUIAction;
 import hearts.defs.protocol.IServerSocket;
@@ -94,6 +95,11 @@ public class MainFrame
         helpMenu.setText("Pomoc");
 
         aboutItem.setText("O grze...");
+        aboutItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                aboutItemActionPerformed(evt);
+            }
+        });
         helpMenu.add(aboutItem);
         helpMenu.add(jSeparator1);
 
@@ -151,6 +157,11 @@ public class MainFrame
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
         gameTable.showAuction(true);
     }//GEN-LAST:event_jMenuItem3ActionPerformed
+
+    private void aboutItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aboutItemActionPerformed
+
+        new RulesDialog(this,true).setVisible(true);
+    }//GEN-LAST:event_aboutItemActionPerformed
 
     /**
      * @param args the command line arguments

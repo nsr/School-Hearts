@@ -19,7 +19,9 @@ import hearts.state.actions.NextModeAction;
 import hearts.state.actions.NextTripAction;
 import hearts.state.exceptions.WrongCardValueException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
@@ -54,8 +56,6 @@ public class Judge implements hearts.defs.judge.IJudge {
     public IGameState judge(IGameState state, AAction action) throws GameStateException {
         IGameState copyState = null;
         AddCardToTrickAction aa = null;
-
-
 
         /**
          * Sprawdzam jaki to typ akcji.
@@ -138,16 +138,20 @@ public class Judge implements hearts.defs.judge.IJudge {
 
                 ICard[] tabC = new ICard[13];
 
+                //System.out.println("############    GRACZ    "+i);
                 for (int k = 0; k < 13; k++) {
                     tabC[k] = pack[i * 13 + k];
-
+                    System.out.println("__________________###      " + tabC[k].toString());
+                    //System.out.println("###      "+tabC[k].toString());
                 }//mam talię kart gracza
+                //System.out.println("###########################");
 
+                //segregowanie kart
+                Arrays.sort(tabC, new CardComparer());
                 ac.setICard(i, tabC);
             }// mam nowe rozdanie kart
 
             //nowy stan gry
-
 
         } else if (action instanceof FirstModeAction) {
             /* Przygotuwuje pierwsze rozdanie.
@@ -169,9 +173,10 @@ public class Judge implements hearts.defs.judge.IJudge {
 
                 for (int k = 0; k < 13; k++) {
                     tabC[k] = pack[i * 13 + k];
-
+                    System.out.println("__________________###      " + tabC[k].toString());
                 }//mam talię kart gracza
-
+                CardComparer comparator = new CardComparer();
+                Arrays.sort(tabC, comparator);
                 act.setCards(tabC, i);
             }
 
@@ -485,15 +490,17 @@ public class Judge implements hearts.defs.judge.IJudge {
         SFinalPoints userPoints = new SFinalPoints();
         if (state.getMode().equals(IGameState.Mode.BANDIT)) {
             /**
-             * 1. Sumowanie punktów z lew, jaki wzioł gracz.
-             * 2. Okreslenie czy ktos nic nie wzioł
+             * 1. Sumowanie punktów z lew, jaki wziął gracz.
+             * 2. Okreslenie czy ktos nic nie wziął
              * 3. Dodanie odpowiedniech etapów gry.
              */
             for (int i = 0; i < 4; i++) {
                 userPoints.points[i] = 0;
                 IUserState ust = state.getUserState(i);
                 List<ITrick> list = ust.getTricks();
-                //if (GameConstants.GET_LOGGER) Logger.getLogger(Judge.class.getName()).log(Level.INFO, "wziątki " + list.size() );
+                if (GameConstants.GET_LOGGER) {
+                    Logger.getLogger(Judge.class.getName()).log(Level.INFO, "wziątki " + list.size());
+                }
                 for (int k = 0; k < list.size(); k++) {
                     //punkty za lewę
                     userPoints.points[i] -= 2;
@@ -546,7 +553,7 @@ public class Judge implements hearts.defs.judge.IJudge {
                 }
             }//wiem ilu graczy nie wieło żadne lewy
             if (zero == 3) {
-                // zero punktów dla gracza który wzioł wszystkie wziątki
+                // zero punktów dla gracza który wział wszystkie wziątki
                 // -130 dla pozostałych
                 for (int i = 0; i < 4; i++) {
                     if (userPoints.points[i] == 0) {
@@ -615,12 +622,8 @@ public class Judge implements hearts.defs.judge.IJudge {
                     userPoints.points[i] *= (zero + 1);
                 }
             }
-
-
         }
         return userPoints;
-
-
 
     }
 
@@ -633,3 +636,24 @@ public class Judge implements hearts.defs.judge.IJudge {
         return state.clone();
     }
 }
+
+class CardComparer implements Comparator {
+
+    public int compare(Object o1, Object o2) {
+        ICard i1 = ((ICard) o1);
+        ICard i2 = ((ICard) o2);
+        
+        return (i1.getValue()> i2.getValue()) ? 1 : 0;
+//        if (i1.getColor().toString().equals(i2.getColor().toString())) {
+//            if (i1.getValue() > i2.getValue()) {
+//                return -1;
+//            } else {
+//                return 1;
+//            }
+//        } else {
+//            return i1.getColor().toString().compareTo(i2.getColor().toString());
+//        }
+//        //return 1;//return Math.abs(i1) - Math.abs(i2);
+    }
+}
+

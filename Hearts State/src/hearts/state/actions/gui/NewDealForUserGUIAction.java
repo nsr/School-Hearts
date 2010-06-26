@@ -17,7 +17,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Klasa przygotowana specjalnie z myślą o klijencie, zawiera nowe karty gracza i zaktualizowaną punktacje
+ * Klasa przygotowana specjalnie z myślą o kliencie, zawiera nowe karty gracza i zaktualizowaną punktacje
  * oraz, nowy Typ rozgrywki.
  * @author Paweł Trynkiewicz
  */
