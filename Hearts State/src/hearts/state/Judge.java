@@ -637,23 +637,10 @@ public class Judge implements hearts.defs.judge.IJudge {
     }
 }
 
-class CardComparer implements Comparator {
+class CardComparer implements Comparator<ICard> {
 
-    public int compare(Object o1, Object o2) {
-        ICard i1 = ((ICard) o1);
-        ICard i2 = ((ICard) o2);
-        
-        return (i1.getValue()> i2.getValue()) ? 1 : 0;
-//        if (i1.getColor().toString().equals(i2.getColor().toString())) {
-//            if (i1.getValue() > i2.getValue()) {
-//                return -1;
-//            } else {
-//                return 1;
-//            }
-//        } else {
-//            return i1.getColor().toString().compareTo(i2.getColor().toString());
-//        }
-//        //return 1;//return Math.abs(i1) - Math.abs(i2);
+    public int compare(ICard o1, ICard o2) {
+        return o2.getColor().toString().compareTo(o1.getColor().toString());
     }
 }
 
