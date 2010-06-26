@@ -7,6 +7,7 @@ package hearts.client.hui.details;
 
 import hearts.defs.state.LobbyTableInfo;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.AbstractTableModel;
@@ -78,6 +79,7 @@ public class LobbyTableModel extends AbstractTableModel{
                 data.put(info.getTableName(), info);
             }
         }
+        Collections.sort(tables);
         fireTableDataChanged();
     }
 

@@ -23,6 +23,7 @@ import javax.swing.DefaultListModel;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+import javax.swing.table.TableRowSorter;
 
 /**
  * Panel zawierający lobby.
@@ -39,9 +40,6 @@ public class LobbyPanel extends javax.swing.JPanel implements IGUILobbyPanel, Mo
         table.setModel(model);
         table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         table.addMouseListener(this);
-
-        //TableRowSorter<LobbyTableModel> sorter = new TableRowSorter<LobbyTableModel>();
-        //table.setRowSorter(sorter);
 
         tableNameEdit.getDocument().addDocumentListener(this);
         
