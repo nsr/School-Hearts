@@ -278,11 +278,17 @@ public class MainFrame
     }
 
     public void newGamePanel() {
+        panels.remove(Panel.GAME);
         this.gameTable = new GameTable();
+        this.gameTable.setGui(this);
+        panels.put(Panel.GAME, this.gameTable);
     }
 
     public void newLobbyPanel() {
+        panels.remove(Panel.LOBBY);
         this.lobbyPanel = new LobbyPanel();
+        this.lobbyPanel.setGui(this);
+        panels.put(Panel.LOBBY, this.lobbyPanel);
     }
 
 }
