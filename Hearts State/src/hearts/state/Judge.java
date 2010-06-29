@@ -147,7 +147,10 @@ public class Judge implements hearts.defs.judge.IJudge {
                 //System.out.println("###########################");
 
                 //segregowanie kart
-                Arrays.sort(tabC, new CardComparer());
+                List<ICard> raw = new ArrayList<ICard>(13);
+                Collections.sort(raw, new CardComparer());
+                tabC = raw.toArray(tabC);
+
                 ac.setICard(i, tabC);
             }// mam nowe rozdanie kart
 
@@ -164,10 +167,8 @@ public class Judge implements hearts.defs.judge.IJudge {
 
             /*Dodaje kart graczom
              */
-
             ICard[] pack = this.generateNewCardTab();
             for (int i = 0; i < 4; i++) {
-
 
                 ICard[] tabC = new ICard[13];
 
@@ -175,8 +176,10 @@ public class Judge implements hearts.defs.judge.IJudge {
                     tabC[k] = pack[i * 13 + k];
                     System.out.println("__________________###      " + tabC[k].toString());
                 }//mam talię kart gracza
-                CardComparer comparator = new CardComparer();
-                Arrays.sort(tabC, comparator);
+                List<ICard> raw = new ArrayList<ICard>(13);
+                Collections.sort(raw, new CardComparer());
+                tabC = raw.toArray(tabC);
+
                 act.setCards(tabC, i);
             }
 
@@ -481,7 +484,7 @@ public class Judge implements hearts.defs.judge.IJudge {
     }
 
     /**
-     * Funkcja określająca ile punktów zdobył każdy z graczy. A takrze, jak rozgrywki trzeba dodać.
+     * Funkcja określająca ile punktów zdobył każdy z graczy. A takze, jak rozgrywki trzeba dodać.
      * @param state
      * @param user
      * @return
@@ -640,6 +643,14 @@ public class Judge implements hearts.defs.judge.IJudge {
 class CardComparer implements Comparator<ICard> {
 
     public int compare(ICard o1, ICard o2) {
+        if (this.color(o1,o2)>0) {
+            return (o1.getValue()>o2.getValue()?1:0);
+        } else {
+            return this.color(o1,o2);
+        }
+    }
+
+    private int color(ICard o1,ICard o2) {
         return o2.getColor().toString().compareTo(o1.getColor().toString());
     }
 }
