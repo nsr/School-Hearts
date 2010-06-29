@@ -644,7 +644,7 @@ class CardComparer implements Comparator<ICard> {
 
     public int compare(ICard o1, ICard o2) {
         if (this.color(o1,o2)==0) {
-            return (o1.getValue()>o2.getValue()?1:0);
+            return o1.getValue()-o2.getValue();
         } else {
             return this.color(o1,o2);
         }
